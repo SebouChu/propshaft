@@ -79,9 +79,9 @@ Start by following these steps:
 2. Run `./bin/bundle install`;
 3. Run `./bin/rails css:install:sass`.
 
-After you are done you will notice that once again the install step added various files to your project and updated some of the existing ones.
+After you are done you will notice that the install step updated some files.
 
-**The new process 'Procfile.dev'**
+**The new process in 'Procfile.dev'**
 
 Just like the javascript process, this one will bundle and watch for changes in css files.
 
@@ -89,7 +89,7 @@ Just like the javascript process, this one will bundle and watch for changes in 
 
 This is the command `yarn build` will use to bundle css files.
 
-**The 'link_tree' directives removed from 'app/assets/manifest.js'**
+**The 'link_tree' directive removed from 'app/assets/manifest.js'**
 
 Now that the CSS files will be placed into `app/assets/build`, Sprockets no longer needs to worry about the `app/assets/stylesheets` folder. If you have any other `link_tree` for css files, remove them too.
 
@@ -140,7 +140,7 @@ Start by following these steps:
 
 **Asset paths**
 
-Propshaft will automatically include in its search paths the folders `vendor/assets`, `li/assets` and `app/assets` of your project and all the gems in your gemfile. You can see all included files by using the `reveal` rake task:
+Propshaft will automatically include in its search paths the folders `vendor/assets`, `lib/assets` and `app/assets` of your project and all the gems in your gemfile. You can see all included files by using the `reveal` rake task:
 ```
  rake assets:reveal
 ```
@@ -167,13 +167,13 @@ In Sprockets, `main.scss` can reference `hero.jpg` like this:
 background: image_url('hero.jpg')
 ```
 
-Using the same path with `url` in Propshaft to raise in error, saying it cannot locate `theme/hero.jpg`. That's because Propshaft assumes all paths are relative to the path of the file it's processing. Since it was processing a css file inside the `theme` folder, it will also look for `hero.jpg` in the same folder.
+Using the same path with `url` in Propshaft will cause it to raise an error, saying it cannot locate `theme/hero.jpg`. That's because Propshaft assumes all paths are relative to the path of the file it's processing. Since it was processing a css file inside the `theme` folder, it will also look for `hero.jpg` in the same folder.
 
-By adding a `/` at the start of the path we are telling Propshaft to consider all paths to be absolute. While this change in behavior increases the work a bit when upgrading, it makes **external libraries like FontAwesome and Bootstrap themes to work out-of-the-box**.  
+By adding a `/` at the start of the path we are telling Propshaft to consider to treat this path as an absolute path. While this change in behavior increases the work a bit when upgrading, it makes **external libraries like FontAwesome and Bootstrap themes work out-of-the-box**.  
 
 **Asset content**
 
-It's a common pattern in apps to inline small SVG files and low resolution versions of images that need to be displayed as quickly as possible. In Propshaft, you can easily do that with a single line of code that will be the same in all environments: 
+It's a common pattern in apps to inline small SVG files and low resolution versions of images that need to be displayed as quickly as possible. In Propshaft, the same line of code works for all environments: 
 ```ruby
 Rails.application.assets.load_path.find('logo.svg').content
 ```
