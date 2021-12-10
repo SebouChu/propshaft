@@ -35,6 +35,11 @@ class Propshaft::Compilers::CssAssetUrlsTest < ActiveSupport::TestCase
     assert_match(/{ background: url\("\/assets\/foobar\/source\/file-[a-z0-9]{40}.jpg"\); }/, compiled)
   end
 
+  test "fingerprint after name" do
+    compiled = compile_asset_with_content(%({ background: url(file.jpg?fingerprint); }))
+    assert_match(/{ background: url\("\/assets\/foobar\/source\/file-[a-z0-9]{40}.jpg"\); }/, compiled)
+  end
+
   test "root directory" do
     compiled = compile_asset_with_content(%({ background: url('/file.jpg'); }))
     assert_match(/{ background: url\("\/assets\/file-[a-z0-9]{40}.jpg"\); }/, compiled)
